@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>SkyBuilder</title>
+  <style>
+    body {
+      background-image: url('cool-background.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+
+    .site {
+      margin: 1rem;
+      padding: 2rem 2rem;
+      text-align: center;
+    }
+
+    .gear_container {
+      display: inline-block;
+      align: left;
+      padding: 1rem 1rem;
+    }
+
+    .stats_container {
+      display: inline-block;
+      padding: 1rem 1rem;
+    }
+  </style>
+  <!--- <link href="style.css" rel="stylesheet" type="text/css" /> --->
+</head>
+
+<!--- <script src="script.js"></script>  for scripts --->
+
+<body>
+  <h1>SkyBuilder</h1>
+  Welcome to SkyBuilder!
+  <br>
+  Next to each equipment type, insert the <b>exact</b> name of your item.<br>
+  Below them, include modifiers such as "Necrotic t6 fpb". See thread for<br>
+  full list of modifiers. This also supports every item in the SkyBlock API.<br>
+  This was inspired by <a href="https://hppeng-wynn.github.io">hppeng's WynnBuilder</a><br>
+
+  Enjoy!
+  <div class="site">
+    <div class="gear_container">
+      <div class="armor" align="left">
+        <br>
+        <br>
+        Helmet
+        <select type="text" id="helmet"></select>
+        <br>
+        <input type="text" id="helmet_modifiers"></input>
+        <br>
+        <br>
+        Chestplate
+        <select type="text" id="chestplate"></select>
+        <br>
+        <input type="text" id="chestplate_modifiers"></input>
+        <br>
+        <br>
+        Leggings
+        <select type="text" id="leggings"></select>
+        <br>
+        <input type="text" id="leggings_modifiers"></input>
+        <br>
+        <br>
+        Boots
+        <select type="text" id="boots"></select>
+        <br>
+        <input type="text" id="boots_modifiers"></input>
+      </div>
+      <div class="equipment" align="left">
+        <br>
+        <br>
+        Necklace
+        <select type="text" id="necklace"></select>
+        <br>
+        <input type="text" id="necklace_modifiers"></input>
+        <br>
+        <br>
+        Cloak
+        <select type="text" id="cloak"></select>
+        <br>
+        <input type="text" id="cloak_modifiers"></input>
+        <br>
+        <br>
+        Belt
+        <select type="text" id="belt""></select>
+        <br>
+        <input type="text" id="belt_modifiers"></input>
+        <br>
+        <br>
+        Gloves and Bracelet
+        <select type="text" id="gloves"></select>
+        <br>
+        <input type="text" id="gloves_modifiers"></input>
+        <br>
+        <br>
+        Weapon
+        <select type="text" id="weapon"></select>
+        <br>
+        <input type="text" id="weapon_modifiers"></input>
+      </div>
+    </div>
+    <div class="stats_container">
+      <h3 id="stats">Stats here.</h3>
+    </div>
+  </div>
+  <br>
+  <br>
+  
+  <script src="js/items.js"></script>
+  <script src="js/dropdowns.js"></script>
+  <script src="js/updatefields.js"></script>
+</body>
+
+</html>
