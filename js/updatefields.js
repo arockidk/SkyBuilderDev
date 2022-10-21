@@ -8,6 +8,7 @@ document.getElementById("belt").onchange = function() { updateFieldsRequest() }
 document.getElementById("gloves").onchange = function() { updateFieldsRequest() }
 document.getElementById("weapon").onchange = function() { updateFieldsRequest() }
 
+// edit for commit testing
 
 function nameToID(name) {
   url = 'https://api.hypixel.net/resources/skyblock/items'
