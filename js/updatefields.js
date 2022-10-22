@@ -231,5 +231,5 @@ function updateFields(items) {
     + "<br> Critical Damage: " + stats["CRITICAL_DAMAGE"]
     + "<br> Critical Chance: " + stats["CRITICAL_CHANCE"]
     + "<br> Melee Damage (with crit): " + calcDamage(stats["DAMAGE"], stats["STRENGTH"], stats["CRITICAL_DAMAGE"], 0, 0)
-    + "<s>------------------------------------</s><br>"
+    + "<br><s>------------------------------------</s><br>"
 }
