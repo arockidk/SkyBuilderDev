@@ -42,12 +42,12 @@
 
 <body text="#ffffff">
   <h1>SkyBuilder</h1>
-  Welcome to SkyBuilder!
+  <h2>Welcome to SkyBuilder!</h2>
   <br>
-  Next to each equipment type, insert the <b>exact</b> name of your item.<br>
-  Below them, include modifiers such as "Necrotic t6 fpb". See thread for<br>
-  full list of modifiers. This also supports every item in the SkyBlock API.<br>
-  This was inspired by <a href="https://hppeng-wynn.github.io">hppeng's WynnBuilder</a><br>
+  <h3>Next to each equipment type, insert the <b>exact</b> name of your item.<br>
+    Below them, include modifiers such as "Necrotic t6 fpb". See thread for<br>
+    full list of modifiers. This also supports every item in the SkyBlock API.<br>
+    This was inspired by <a href="https://hppeng-wynn.github.io">hppeng's WynnBuilder</a></h3><br>
 
   Enjoy!
   <div class="site">
@@ -66,6 +66,13 @@
           <option value="Silky">Silky</option>
           <option value="Silky">Silky</option>
         </select>
+      </div>
+      <div class="buffs" align="left">
+        <br>
+        <input type="checkbox" id="god_pot_buff">God Potion</input>
+        <input type="checkbox" id="pigman_sword_buff">Pigman Sword</input>
+        <input type="checkbox" id="jasper_scroll_buff">Jasper Power Scroll</input>
+        <input type="checkbox" id="amethyst_scroll_buff">Amethyst Power Scroll</input>
       </div>
       <div class="armor" align="left">
         <br>
@@ -133,8 +140,9 @@
   <br>
   <br>
   <button id="copylink">Click to copy link!</button>
-
+  <button id="copylink-sharing">Click to copy link for sharing!</button>
   <script src="js/items.js"></script>
+  <script src="js/reforges.js"></script>
   <script src="js/dropdowns.js"></script>
   <script src="js/updatefields.js"></script>
   <script src="js/loadvals.js"></script>
