@@ -52,7 +52,7 @@ function returnItem(item, stats) {
     "CRITICAL_CHANCE",
     "CRITICAL_DAMAGE",
     "ATTACK_SPEED",
-    "ABILITY_DAMAGE",
+    "WEAPON_ABILITY_DAMAGE",
     "TRUE_DEFENSE",
     "FEROCITY",
     "MAGIC_FIND",
@@ -180,7 +180,7 @@ function updateFields(items) {
     "CRITICAL_CHANCE": 0,
     "CRITICAL_DAMAGE": 0,
     "ATTACK_SPEED": 0,
-    "ABILITY_DAMAGE": 0,
+    "WEAPON_ABILITY_DAMAGE": 0,
     "TRUE_DEFENSE": 0,
     "FEROCITY": 0,
     "MAGIC_FIND": 0,
@@ -220,7 +220,11 @@ function updateFields(items) {
     stats = returnItem(weapon_item, stats)
   }
 
-  document.getElementById("stats").innerHTML =
+  getStatsText(stats, weapon_item)
+}
+
+function getStatsText(stats, weapon) {
+  text =
     "Health: " + stats["HEALTH"]
     + "<br> Defense: " + stats["DEFENSE"]
     + "<br> EHP: " + Math.round(stats["HEALTH"] * (1 + (stats["DEFENSE"] / 100)))
@@ -228,8 +232,17 @@ function updateFields(items) {
     + "<s>------------------------------------</s><br>"
     + "<br> Damage: " + stats["DAMAGE"]
     + "<br> Strength: " + stats["STRENGTH"]
-    + "<br> Critical Damage: " + stats["CRITICAL_DAMAGE"]
-    + "<br> Critical Chance: " + stats["CRITICAL_CHANCE"]
+    + "<br> Critical Damage: " + stats["CRITICAL_DAMAGE"] + "%"
+    + "<br> Critical Chance: " + stats["CRITICAL_CHANCE"] + "%"
     + "<br> Melee Damage (with crit): " + calcDamage(stats["DAMAGE"], stats["STRENGTH"], stats["CRITICAL_DAMAGE"], 0, 0)
     + "<br><s>------------------------------------</s><br>"
+    + "<br>Walk Speed: " + stats["WALK_SPEED"] + "%"
+    + "<br>Intelligence: " + stats["INTELLIGENCE"]
+  if (stats["WEAPON_ABILITY_DAMAGE"] > 0) {
+    text = text
+      + "<br>Ability Damage Base: " + stats["WEAPON_ABILITY_DAMAGE"]
+      + "<br>Ability Damage Scaling: " + weapon["ability_damage_scaling"]
+      + "<br>Final Ability Damage: " + stats["WEAPON_ABILITY_DAMAGE"] * (1 + (stats["INTELLIGENCE"] / 100)) * (1 + (0)) * (1 + (0))
+  }
+  document.getElementById("stats").innerHTML = text
 }
