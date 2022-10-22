@@ -12,6 +12,11 @@ document.getElementById("cloak").onchange = function() { updateFieldsRequest() }
 document.getElementById("belt").onchange = function() { updateFieldsRequest() }
 document.getElementById("gloves").onchange = function() { updateFieldsRequest() }
 document.getElementById("weapon").onchange = function() { updateFieldsRequest() }
+document.getElementById("necklace_modifiers").onchange = function() { updateFieldsRequest() }
+document.getElementById("cloak_modifiers").onchange = function() { updateFieldsRequest() }
+document.getElementById("belt_modifiers").onchange = function() { updateFieldsRequest() }
+document.getElementById("gloves_modifiers").onchange = function() { updateFieldsRequest() }
+document.getElementById("weapon_modifiers").onchange = function() { updateFieldsRequest() }
 
 // edit for commit testing
 // convert an item name to an ID (unused)
@@ -65,7 +70,9 @@ function returnItem(item, stats) {
     "PET_LUCK",
     "SEA_CREATURE_CHANCE",
     "MINING_SPEED",
-    "MINING_FORTUNE"
+    "MINING_FORTUNE",
+    "ADDITIVE_DAMAGE",
+    "COMBAT_DAMAGE"
   ]
 
   for (let i = 0; i < statsList.length; i++) {
@@ -119,6 +126,39 @@ function handleEnchants(modifiers, stats, item) {
       stats["HEALTH"] += 105;
       stats["DEFENSE"] += 21;
     }
+    if (modifiers.includes("hpb")) {
+      stats["HEALTH"] += 40;
+      stats["DEFENSE"] += 20;
+    }
+    if (modifiers.includes("fpb")) {
+      stats["HEALTH"] += 60;
+      stats["DEFENSE"] += 30;
+    }
+  }
+  if (category.includes("SWORD") || category.includes("LONGSWORD")) {
+    if (modifiers.includes("t5")) {
+      stats["ADDITIVE_DAMAGE"] += 30 + 30;
+      stats["CRITICAL_DAMAGE"] += 50;
+    }
+    if (modifiers.includes("t6")) {
+      stats["ADDITIVE_DAMAGE"] += 45 + 45;
+      stats["CRITICAL_DAMAGE"] += 70;
+    }
+    if (modifiers.includes("t7")) {
+      stats["ADDITIVE_DAMAGE"] += 65 + 65;
+      stats["CRITICAL_DAMAGE"] += 100;
+    }
+    if (modifiers.includes("ofa")) {
+      stats["ADDITIVE_DAMAGE"] += 500;
+    }
+    if (modifiers.includes("hpb")) {
+      stats["DAMAGE"] += 20;
+      stats["STRENGTH"] += 20;
+    }
+    if (modifiers.includes("fpb")) {
+      stats["DAMAGE"] += 30;
+      stats["STRENGTH"] += 30;
+    }
   }
   return stats
 }
@@ -129,8 +169,13 @@ function returnModifiers(modifiers, stats, item) {
   return stats
 }
 // calculate melee damage using given values
-function calcDamage(damage, strength, critical_damage, baseMult, postMult) {
-  return (5 + damage) * (1 + (strength / 100)) * (1 + (critical_damage / 100))
+function calcDamage(stats, baseMult, postMult) {
+  let damage = stats["DAMAGE"]
+  let strength = stats["STRENGTH"]
+  let critical_damage = stats["CRITICAL_DAMAGE"]
+  let ferocity = stats["FEROCITY"]
+
+  return ((5 + damage) * (1 + (strength / 100)) * (1 + (critical_damage / 100)) * (1 + (baseMult / 100)) * (1 + (postMult / 100))) * (1 + (ferocity / 100))
 }
 // update stats fields based on equipment and armor and modifiers given
 function updateFields(items) {
@@ -170,6 +215,7 @@ function updateFields(items) {
   // Weapon
   let weapon_item = null
   let weapon = document.getElementById("weapon").value
+  let weapon_modifiers = document.getElementById("weapon_modifiers").value
   let weapon_matches = 0
 
   // Calculate items
@@ -217,12 +263,12 @@ function updateFields(items) {
   // stats json
   stats = {
     "DAMAGE": 0,
-    "HEALTH": 0,
+    "HEALTH": 100,
     "DEFENSE": 0,
     "STRENGTH": 0,
     "INTELLIGENCE": 0,
-    "WALK_SPEED": 0,
-    "CRITICAL_CHANCE": 0,
+    "WALK_SPEED": 100,
+    "CRITICAL_CHANCE": 30,
     "CRITICAL_DAMAGE": 0,
     "ATTACK_SPEED": 0,
     "WEAPON_ABILITY_DAMAGE": 0,
@@ -233,6 +279,8 @@ function updateFields(items) {
     "SEA_CREATURE_CHANCE": 0,
     "MINING_SPEED": 0,
     "MINING_FORTUNE": 0,
+    "ADDITIVE_DAMAGE": 0,
+    "COMBAT_DAMAGE": 0
   }
   // check for item matches, and if it matches correctly, return the item
   // if statements are intentionally duplicated
@@ -264,6 +312,7 @@ function updateFields(items) {
     stats = returnItem(weapon_item, stats)
   }
 
+  // enchants
   if (helmet_matches == 1) {
     stats = handleEnchants(helmet_modifiers, stats, helmet_item)
   }
@@ -276,6 +325,7 @@ function updateFields(items) {
   if (boots_matches == 1) {
     stats = handleEnchants(boots_modifiers, stats, helmet_item)
   }
+  // reforges
   if (helmet_matches == 1) {
     stats = handleReforges(helmet_modifiers, stats, helmet_item)
   }
@@ -289,8 +339,26 @@ function updateFields(items) {
     stats = handleReforges(boots_modifiers, stats, helmet_item)
   }
 
+  // weapon
+  if (weapon_matches == 1) {
+    stats = handleEnchants(weapon_modifiers, stats, weapon_item)
+  }
+
   let sbxp = document.getElementById("sbxp").value
-  stats["HEALTH"] += Math.round(parseInt(sbxp / 100)) * 5
+  let skavg = document.getElementById("skavg").value
+  let skcmbt = document.getElementById("combatlv").value
+  stats["HEALTH"] += Math.round(parseInt(sbxp / 100)) * 5 + (skavg * 8)
+  stats["STRENGTH"] += Math.round(parseInt(sbxp / 500)) * 1 + (skavg * 2)
+  stats["CRITICAL_CHANCE"] += (skavg * 2)
+  stats["HEALTH"] += Math.round(parseInt(sbxp / 1000)) * 10
+  stats["ADDITIVE_DAMAGE"] += (skcmbt * 4)
+
+  if (helmet_item !== undefined && helmet_item !== null) {
+    if (helmet_item["name"].includes("Warden Helmet")) {
+      stats["WALK_SPEED"] = stats["WALK_SPEED"] / 2
+      stats["DAMAGE"] = Math.round(stats["DAMAGE"] * (1 + (0.2 * (stats["WALK_SPEED"] / 25))))
+    }
+  }
   getStatsText(stats, weapon_item)
 }
 
@@ -307,7 +375,7 @@ function getStatsText(stats, weapon) {
     + "<br> Strength: " + stats["STRENGTH"]
     + "<br> Critical Damage: " + stats["CRITICAL_DAMAGE"] + "%"
     + "<br> Critical Chance: " + stats["CRITICAL_CHANCE"] + "%"
-    + "<br> Melee Damage (with crit): " + Math.round(calcDamage(stats["DAMAGE"], stats["STRENGTH"], stats["CRITICAL_DAMAGE"], 0, 0))
+    + "<br> Estimate Average Melee DPS (with crit): " + (Math.round(calcDamage(stats, 0, (stats["ADDITIVE_DAMAGE"] / 100))) * (1 + (stats["ATTACK_SPEED"] * 0.05)))
     + "<br><s>------------------------------------</s><br>"
     + "<br><h2>Misc. Stats</h2>"
     + "<br>Walk Speed: " + stats["WALK_SPEED"] + "%"
@@ -318,7 +386,7 @@ function getStatsText(stats, weapon) {
       + "<br><h2>Magic Stats</h2>"
       + "<br>Ability Damage Base: " + stats["WEAPON_ABILITY_DAMAGE"]
       + "<br>Ability Damage Scaling: " + weapon["ability_damage_scaling"]
-      + "<br>Final Ability Damage: " + Math.round(stats["WEAPON_ABILITY_DAMAGE"] * (1 + (stats["INTELLIGENCE"] / 100)) * (1 + (0)) * (1 + (0)))
+      + "<br>Estimate Final Ability Damage: " + Math.round(stats["WEAPON_ABILITY_DAMAGE"] * (1 + (stats["INTELLIGENCE"] / 100)) * 1 * 1)
   }
   if (stats["MINING_SPEED"] > 0) {
     text = text
