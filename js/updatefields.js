@@ -1,3 +1,4 @@
+// assign each dropdown to update the stats when changed
 document.getElementById("helmet").onchange = function() { updateFieldsRequest() }
 document.getElementById("chestplate").onchange = function() { updateFieldsRequest() }
 document.getElementById("leggings").onchange = function() { updateFieldsRequest() }
@@ -9,9 +10,9 @@ document.getElementById("gloves").onchange = function() { updateFieldsRequest() 
 document.getElementById("weapon").onchange = function() { updateFieldsRequest() }
 
 // edit for commit testing
-
+// convert an item name to an ID (unused)
 function nameToID(name) {
-  url = 'https://api.hypixel.net/resources/skyblock/items'
+  url = 'skyitems.json'
   fetch(url).then(response =>
     response.json().then(data => ({
       data: data,
@@ -26,9 +27,10 @@ function nameToID(name) {
     }));
   return undefined
 }
+// make api request and use that to calculate stats
 function updateFieldsRequest() {
   console.log("Updating.")
-  url = 'https://api.hypixel.net/resources/skyblock/items'
+  url = 'skyitems.json'
   fetch(url).then(response =>
     response.json().then(data => ({
       data: data,
@@ -40,7 +42,7 @@ function updateFieldsRequest() {
 
 
 }
-
+// return item stats and add it to given stats
 function returnItem(item, stats) {
   statsList = [
     "DAMAGE",
@@ -57,7 +59,9 @@ function returnItem(item, stats) {
     "FEROCITY",
     "MAGIC_FIND",
     "PET_LUCK",
-    "SEA_CREATURE_CHANCE"
+    "SEA_CREATURE_CHANCE",
+    "MINING_SPEED",
+    "MINING_FORTUNE"
   ]
 
   console.log(item["stats"])
@@ -78,17 +82,18 @@ function returnItem(item, stats) {
 
   return stats
 }
-
+// return modifiers such as "necrotic t6 hpb"
 function returnModifiers(modifiers, stats, category) {
   if (category.includes("helmet") || category.includes("chestplate") || category.includes("leggings") || category.includes("boots")) {
 
   }
   return stats
 }
-
+// calculate melee damage using given values
 function calcDamage(damage, strength, critical_damage, baseMult, postMult) {
   return (5 + damage) * (1 + (strength / 100)) * (1 + (critical_damage / 100))
 }
+// update stats fields based on equipment and armor and modifiers given
 function updateFields(items) {
   console.log("Updating fields.")
   // Armor
@@ -133,15 +138,15 @@ function updateFields(items) {
     if (items[i]["id"].includes("STARRED_")) {
       continue
     }
-    if (items[i].name.includes(helmet)) {
+    if (items[i].name == helmet) {
       helmet_item = items[i]
       helmet_matches += 1
     }
-    if (items[i].name.includes(chestplate)) {
+    if (items[i].name == chestplate) {
       chestplate_item = items[i]
       chestplate_matches += 1
     }
-    if (items[i].name.includes(leggings)) {
+    if (items[i].name == leggings) {
       leggings_item = items[i]
       leggings_matches += 1
     }
@@ -170,6 +175,7 @@ function updateFields(items) {
       weapon_matches += 1
     }
   }
+  // stats json
   stats = {
     "DAMAGE": 0,
     "HEALTH": 0,
@@ -185,9 +191,11 @@ function updateFields(items) {
     "FEROCITY": 0,
     "MAGIC_FIND": 0,
     "PET_LUCK": 0,
-    "SEA_CREATURE_CHANCE": 0
+    "SEA_CREATURE_CHANCE": 0,
+    "MINING_SPEED": 0,
+    "MINING_FORTUNE": 0,
   }
-
+  // check for item matches, and if it matches correctly, return the item
   if (helmet_matches == 1) {
     stats = returnItem(helmet_item, stats)
     stats = returnModifiers(helmet_modifiers, stats, helmet_item["category"])
@@ -225,24 +233,34 @@ function updateFields(items) {
 
 function getStatsText(stats, weapon) {
   text =
-    "Health: " + stats["HEALTH"]
+    "<br><h2>Defensive Stats</h2>"
+    + "Health: " + stats["HEALTH"]
     + "<br> Defense: " + stats["DEFENSE"]
     + "<br> EHP: " + Math.round(stats["HEALTH"] * (1 + (stats["DEFENSE"] / 100)))
     + "<br>"
     + "<s>------------------------------------</s><br>"
+    + "<br><h2>Melee Stats</h2>"
     + "<br> Damage: " + stats["DAMAGE"]
     + "<br> Strength: " + stats["STRENGTH"]
     + "<br> Critical Damage: " + stats["CRITICAL_DAMAGE"] + "%"
     + "<br> Critical Chance: " + stats["CRITICAL_CHANCE"] + "%"
     + "<br> Melee Damage (with crit): " + calcDamage(stats["DAMAGE"], stats["STRENGTH"], stats["CRITICAL_DAMAGE"], 0, 0)
     + "<br><s>------------------------------------</s><br>"
+    + "<br><h2>Misc. Stats</h2>"
     + "<br>Walk Speed: " + stats["WALK_SPEED"] + "%"
     + "<br>Intelligence: " + stats["INTELLIGENCE"]
   if (stats["WEAPON_ABILITY_DAMAGE"] > 0) {
     text = text
+      + "<br><s>------------------------------------</s><br>"
+      + "<br><h2>Magic Stats</h2>"
       + "<br>Ability Damage Base: " + stats["WEAPON_ABILITY_DAMAGE"]
       + "<br>Ability Damage Scaling: " + weapon["ability_damage_scaling"]
       + "<br>Final Ability Damage: " + stats["WEAPON_ABILITY_DAMAGE"] * (1 + (stats["INTELLIGENCE"] / 100)) * (1 + (0)) * (1 + (0))
+  }
+  if (stats["MINING_SPEED"] > 0) {
+    text = text
+      + "<br>Mining Speed: " + stats["MINING_SPEED"]
+      + "<br>Mining Fortune: " + stats["MINING_FORTUNE"]
   }
   document.getElementById("stats").innerHTML = text
 }

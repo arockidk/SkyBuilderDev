@@ -1,5 +1,5 @@
 function nameToID(name) {
-  url = 'https://api.hypixel.net/resources/skyblock/items'
+  url = 'skyitems.json'
   fetch(url).then(response =>
     response.json().then(data => ({
       data: data,
@@ -7,7 +7,7 @@ function nameToID(name) {
     })
     ).then(res => {
       for (let i = 0; i < res.data.items.length; i++) {
-        if(res.data.items[i]["name"] == name) {
+        if (res.data.items[i]["name"] == name) {
           return res.data.items[i]["id"]
         }
       }
@@ -51,8 +51,9 @@ function updateDropdowns(element, items, category) {
   }
 }
 
+// https://api.hypixel.net/resources/skyblock/items old url
 function changeElement(element, category) {
-  url = 'https://api.hypixel.net/resources/skyblock/items'
+  url = 'skyitems.json'
   fetch(url).then(response =>
     response.json().then(data => ({
       data: data,
