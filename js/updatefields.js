@@ -3,6 +3,10 @@ document.getElementById("helmet").onchange = function() { updateFieldsRequest() 
 document.getElementById("chestplate").onchange = function() { updateFieldsRequest() }
 document.getElementById("leggings").onchange = function() { updateFieldsRequest() }
 document.getElementById("boots").onchange = function() { updateFieldsRequest() }
+document.getElementById("helmet_modifiers").onchange = function() { updateFieldsRequest() }
+document.getElementById("chestplate_modifiers").onchange = function() { updateFieldsRequest() }
+document.getElementById("leggings_modifiers").onchange = function() { updateFieldsRequest() }
+document.getElementById("boots_modifiers").onchange = function() { updateFieldsRequest() }
 document.getElementById("necklace").onchange = function() { updateFieldsRequest() }
 document.getElementById("cloak").onchange = function() { updateFieldsRequest() }
 document.getElementById("belt").onchange = function() { updateFieldsRequest() }
@@ -64,29 +68,64 @@ function returnItem(item, stats) {
     "MINING_FORTUNE"
   ]
 
-  console.log(item["stats"])
   for (let i = 0; i < statsList.length; i++) {
     let statCheck = statsList[i]
-    console.log(statCheck)
     if (item["stats"] !== undefined) {
 
       if (item["stats"][statCheck] !== undefined) {
         stats[statCheck] += item["stats"][statCheck]
-        console.log("matched with " + statCheck + " and " + item["stats"][statCheck])
       }
     } else {
-      console.log("Item undefined!" + item["name"])
     }
 
   }
 
   return stats
 }
-// return modifiers such as "necrotic t6 hpb"
-function returnModifiers(modifiers, stats, category) {
-  if (category.includes("helmet") || category.includes("chestplate") || category.includes("leggings") || category.includes("boots")) {
 
+// handle reforges manually
+function handleReforges(modifiers, stats, item) {
+  if (modifiers.includes("Necrotic")) {
+    if (item["tier"] == "COMMON") { stats["INTELLIGENCE"] += 30 }
+    if (item["tier"] == "UNCOMMON") { stats["INTELLIGENCE"] += 60 }
+    if (item["tier"] == "RARE") { stats["INTELLIGENCE"] += 90 }
+    if (item["tier"] == "EPIC") { stats["INTELLIGENCE"] += 120 }
+    if (item["tier"] == "LEGENDARY") { stats["INTELLIGENCE"] += 150 }
+    if (item["tier"] == "MYTHIC") { stats["INTELLIGENCE"] += 200 }
   }
+  if (modifiers.includes("Ancient")) {
+    if (item["tier"] == "COMMON") { stats["STRENGTH"] += 4; stats["CRITICAL_CHANCE"] += 3; stats["HEALTH"] += 7; stats["DEFENSE"] += 7; stats["INTELLIGENCE"] += 6; }
+    if (item["tier"] == "UNCOMMON") { stats["STRENGTH"] += 8; stats["CRITICAL_CHANCE"] += 5; stats["HEALTH"] += 7; stats["DEFENSE"] += 7; stats["INTELLIGENCE"] += 9; }
+    if (item["tier"] == "RARE") { stats["STRENGTH"] += 12; stats["CRITICAL_CHANCE"] += 7; stats["HEALTH"] += 7; stats["DEFENSE"] += 7; stats["INTELLIGENCE"] += 12; }
+    if (item["tier"] == "EPIC") { stats["STRENGTH"] += 18; stats["CRITICAL_CHANCE"] += 9; stats["HEALTH"] += 7; stats["DEFENSE"] += 7; stats["INTELLIGENCE"] += 16; }
+    if (item["tier"] == "LEGENDARY") { stats["STRENGTH"] += 25; stats["CRITICAL_CHANCE"] += 12; stats["HEALTH"] += 7; stats["DEFENSE"] += 7; stats["INTELLIGENCE"] += 20; }
+    if (item["tier"] == "MYTHIC") { stats["STRENGTH"] += 35; stats["CRITICAL_CHANCE"] += 15; stats["HEALTH"] += 7; stats["DEFENSE"] += 7; stats["INTELLIGENCE"] += 25; }
+  }
+  return stats;
+}
+
+function handleEnchants(modifiers, stats, item) {
+  let category = item["category"]
+  if (category.includes("HELMET") || category.includes("CHESTPLATE") || category.includes("LEGGINGS") || category.includes("BOOTS")) {
+    if (modifiers.includes("t5")) {
+      stats["HEALTH"] += 75;
+      stats["DEFENSE"] += 15;
+    }
+    if (modifiers.includes("t6")) {
+      stats["HEALTH"] += 90;
+      stats["DEFENSE"] += 18;
+    }
+    if (modifiers.includes("t7")) {
+      stats["HEALTH"] += 105;
+      stats["DEFENSE"] += 21;
+    }
+  }
+  return stats
+}
+// return modifiers such as "necrotic t6 hpb"
+function returnModifiers(modifiers, stats, item) {
+  stats = handleReforges(modifiers, stats, item)
+  stats = handleEnchants(modifiers, stats, item)
   return stats
 }
 // calculate melee damage using given values
@@ -196,21 +235,18 @@ function updateFields(items) {
     "MINING_FORTUNE": 0,
   }
   // check for item matches, and if it matches correctly, return the item
+  // if statements are intentionally duplicated
   if (helmet_matches == 1) {
     stats = returnItem(helmet_item, stats)
-    stats = returnModifiers(helmet_modifiers, stats, helmet_item["category"])
   }
   if (chestplate_matches == 1) {
     stats = returnItem(chestplate_item, stats)
-    stats = returnModifiers(chestplate_modifiers, stats, chestplate_item["category"])
   }
   if (leggings_matches == 1) {
     stats = returnItem(leggings_item, stats)
-    stats = returnModifiers(leggings_modifiers, stats, leggings_item["category"])
   }
   if (boots_matches == 1) {
     stats = returnItem(boots_item, stats)
-    stats = returnModifiers(boots_modifiers, stats, boots_item["category"])
   }
   if (necklace_matches == 1) {
     stats = returnItem(necklace_item, stats)
@@ -228,6 +264,33 @@ function updateFields(items) {
     stats = returnItem(weapon_item, stats)
   }
 
+  if (helmet_matches == 1) {
+    stats = handleEnchants(helmet_modifiers, stats, helmet_item)
+  }
+  if (chestplate_matches == 1) {
+    stats = handleEnchants(chestplate_modifiers, stats, helmet_item)
+  }
+  if (leggings_matches == 1) {
+    stats = handleEnchants(leggings_modifiers, stats, helmet_item)
+  }
+  if (boots_matches == 1) {
+    stats = handleEnchants(boots_modifiers, stats, helmet_item)
+  }
+  if (helmet_matches == 1) {
+    stats = handleReforges(helmet_modifiers, stats, helmet_item)
+  }
+  if (chestplate_matches == 1) {
+    stats = handleReforges(chestplate_modifiers, stats, helmet_item)
+  }
+  if (leggings_matches == 1) {
+    stats = handleReforges(leggings_modifiers, stats, helmet_item)
+  }
+  if (boots_matches == 1) {
+    stats = handleReforges(boots_modifiers, stats, helmet_item)
+  }
+
+  let sbxp = document.getElementById("sbxp").value
+  stats["HEALTH"] += Math.round(parseInt(sbxp / 100)) * 5
   getStatsText(stats, weapon_item)
 }
 
@@ -244,7 +307,7 @@ function getStatsText(stats, weapon) {
     + "<br> Strength: " + stats["STRENGTH"]
     + "<br> Critical Damage: " + stats["CRITICAL_DAMAGE"] + "%"
     + "<br> Critical Chance: " + stats["CRITICAL_CHANCE"] + "%"
-    + "<br> Melee Damage (with crit): " + calcDamage(stats["DAMAGE"], stats["STRENGTH"], stats["CRITICAL_DAMAGE"], 0, 0)
+    + "<br> Melee Damage (with crit): " + Math.round(calcDamage(stats["DAMAGE"], stats["STRENGTH"], stats["CRITICAL_DAMAGE"], 0, 0))
     + "<br><s>------------------------------------</s><br>"
     + "<br><h2>Misc. Stats</h2>"
     + "<br>Walk Speed: " + stats["WALK_SPEED"] + "%"
@@ -255,7 +318,7 @@ function getStatsText(stats, weapon) {
       + "<br><h2>Magic Stats</h2>"
       + "<br>Ability Damage Base: " + stats["WEAPON_ABILITY_DAMAGE"]
       + "<br>Ability Damage Scaling: " + weapon["ability_damage_scaling"]
-      + "<br>Final Ability Damage: " + stats["WEAPON_ABILITY_DAMAGE"] * (1 + (stats["INTELLIGENCE"] / 100)) * (1 + (0)) * (1 + (0))
+      + "<br>Final Ability Damage: " + Math.round(stats["WEAPON_ABILITY_DAMAGE"] * (1 + (stats["INTELLIGENCE"] / 100)) * (1 + (0)) * (1 + (0)))
   }
   if (stats["MINING_SPEED"] > 0) {
     text = text

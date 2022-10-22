@@ -25,6 +25,11 @@
       padding: 1rem 1rem;
     }
 
+    .base_stats {
+      display: inline-block;
+      padding: 1rem 1rem;
+    }
+
     .stats_container {
       display: inline-block;
       padding: 1rem 1rem;
@@ -35,7 +40,7 @@
 
 <!--- <script src="script.js"></script>  for scripts --->
 
-<body>
+<body text="#ffffff">
   <h1>SkyBuilder</h1>
   Welcome to SkyBuilder!
   <br>
@@ -46,7 +51,18 @@
 
   Enjoy!
   <div class="site">
-    <div class="gear_container">
+    <div class="stats_container">
+      <div class="base_stats" align="left">
+        SkyBlock XP (e.g 23510)
+        <input type="text" id="sbxp"></input>
+        Magical Power
+        <input type="text" id="magical_power"></input>
+        Talisman Powers
+        <select name="Talisman Powers" id="talisman_power">
+          <option value="Silky">Silky</option>
+          <option value="Silky">Silky</option>
+        </select>
+      </div>
       <div class="armor" align="left">
         <br>
         <br>

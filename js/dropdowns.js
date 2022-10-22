@@ -51,6 +51,7 @@ function updateDropdowns(element, items, category) {
   }
 }
 
+
 // https://api.hypixel.net/resources/skyblock/items old url
 function changeElement(element, category) {
   url = 'skyitems.json'
