@@ -1,22 +1,9 @@
 // assign each dropdown to update the stats when changed
-document.getElementById("helmet").onchange = function() { updateFieldsRequest() }
-document.getElementById("chestplate").onchange = function() { updateFieldsRequest() }
-document.getElementById("leggings").onchange = function() { updateFieldsRequest() }
-document.getElementById("boots").onchange = function() { updateFieldsRequest() }
-document.getElementById("helmet_modifiers").onchange = function() { updateFieldsRequest() }
-document.getElementById("chestplate_modifiers").onchange = function() { updateFieldsRequest() }
-document.getElementById("leggings_modifiers").onchange = function() { updateFieldsRequest() }
-document.getElementById("boots_modifiers").onchange = function() { updateFieldsRequest() }
-document.getElementById("necklace").onchange = function() { updateFieldsRequest() }
-document.getElementById("cloak").onchange = function() { updateFieldsRequest() }
-document.getElementById("belt").onchange = function() { updateFieldsRequest() }
-document.getElementById("gloves").onchange = function() { updateFieldsRequest() }
-document.getElementById("weapon").onchange = function() { updateFieldsRequest() }
-document.getElementById("necklace_modifiers").onchange = function() { updateFieldsRequest() }
-document.getElementById("cloak_modifiers").onchange = function() { updateFieldsRequest() }
-document.getElementById("belt_modifiers").onchange = function() { updateFieldsRequest() }
-document.getElementById("gloves_modifiers").onchange = function() { updateFieldsRequest() }
-document.getElementById("weapon_modifiers").onchange = function() { updateFieldsRequest() }
+document.querySelectorAll('.refresher').forEach(item => {
+  item.addEventListener('click', event => {
+    updateFieldsRequest();
+  })
+})
 
 // edit for commit testing
 // convert an item name to an ID (unused)
@@ -274,6 +261,7 @@ function updateFields(items) {
     stats = handleEnchants(weapon_modifiers, stats, weapon_item)
   }
 
+  stats = handleTalisman(stats)
   let sbxp = document.getElementById("sbxp").value
   let skavg = document.getElementById("skavg").value
   let skcmbt = document.getElementById("combatlv").value

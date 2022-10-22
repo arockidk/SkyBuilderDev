@@ -41,96 +41,94 @@
 <!--- <script src="script.js"></script>  for scripts --->
 
 <body text="#ffffff">
-  <h1>SkyBuilder</h1>
-  <h2>Welcome to SkyBuilder!</h2>
-  <br>
-  <h3>Next to each equipment type, insert the <b>exact</b> name of your item.<br>
-    Below them, include modifiers such as "Necrotic t6 fpb". See thread for<br>
-    full list of modifiers. This also supports every item in the SkyBlock API.<br>
-    This was inspired by <a href="https://hppeng-wynn.github.io">hppeng's WynnBuilder</a></h3><br>
+  <marquee behavior="scroll" direction="left" scrollamount="20">v0.3.1 is now released! There are new talisman powers
+    and this scrolling bar is now here!</marquee>
 
-  Enjoy!
+  <h1 style="text-align:center">
+    SkyBuilder
+  </h1>
   <div class="site">
     <div class="stats_container">
       <div class="base_stats" align="left">
         SkyBlock XP (e.g 23510)
-        <input type="text" id="sbxp"></input>
+        <input type="text" id="sbxp" class="refresher"></input>
         Skill Average
-        <input type="text" id="skavg"></input>
+        <input type="text" id="skavg" class="refresher"></input>
         Combat Level
-        <input type="text" id="combatlv"></input>
+        <input type="text" id="combatlv" class="refresher"></input>
         Magical Power
-        <input type="text" id="magical_power"></input>
+        <input type="text" id="magical_power" class="refresher"></input>
         Talisman Powers
-        <select name="Talisman Powers" id="talisman_power">
+        <select name="Talisman Powers" id="talisman_power" class="refresher">
+          <option value="None">None</option>
           <option value="Silky">Silky</option>
-          <option value="Silky">Silky</option>
+          <option value="Scorching">Scorching</option>
         </select>
       </div>
       <div class="buffs" align="left">
         <br>
-        <input type="checkbox" id="god_pot_buff">God Potion</input>
-        <input type="checkbox" id="pigman_sword_buff">Pigman Sword</input>
-        <input type="checkbox" id="jasper_scroll_buff">Jasper Power Scroll</input>
+        <input type="checkbox" id="god_pot_buff" class="refresher">God Potion</input>
+        <input type="checkbox" id="pigman_sword_buff" class="refresher">Pigman Sword</input>
+        <input type="checkbox" id="jasper_scroll_buff" class="refresher">Jasper Power Scroll</input>
         <input type="checkbox" id="amethyst_scroll_buff">Amethyst Power Scroll</input>
       </div>
       <div class="armor" align="left">
         <br>
         <br>
         Helmet
-        <select type="text" id="helmet"></select>
+        <select type="text" id="helmet" class="refresher"></select>
         <br>
-        <input type="text" id="helmet_modifiers"></input>
+        <input type="text" id="helmet_modifiers" class="refresher"></input>
         <br>
         <br>
         Chestplate
-        <select type="text" id="chestplate"></select>
+        <select type="text" id="chestplate" class="refresher"></select>
         <br>
-        <input type="text" id="chestplate_modifiers"></input>
+        <input type="text" id="chestplate_modifiers" class="refresher"></input>
         <br>
         <br>
         Leggings
-        <select type="text" id="leggings"></select>
+        <select type="text" id="leggings" class="refresher"></select>
         <br>
-        <input type="text" id="leggings_modifiers"></input>
+        <input type="text" id="leggings_modifiers" class="refresher"></input>
         <br>
         <br>
         Boots
-        <select type="text" id="boots"></select>
+        <select type="text" id="boots" class="refresher"></select>
         <br>
-        <input type="text" id="boots_modifiers"></input>
+        <input type="text" id="boots_modifiers" class="refresher"></input>
       </div>
       <div class="equipment" align="left">
         <br>
         <br>
         Necklace
-        <select type="text" id="necklace"></select>
+        <select type="text" id="necklace" class="refresher"></select>
         <br>
-        <input type="text" id="necklace_modifiers"></input>
+        <input type="text" id="necklace_modifiers" class="refresher"></input>
         <br>
         <br>
         Cloak
-        <select type="text" id="cloak"></select>
+        <select type="text" id="cloak" class="refresher"></select>
         <br>
-        <input type="text" id="cloak_modifiers"></input>
+        <input type="text" id="cloak_modifiers" class="refresher"></input>
         <br>
         <br>
         Belt
-        <select type="text" id="belt""></select>
+        <select type="text" id="belt" class="refresher"></select>
         <br>
-        <input type=" text" id="belt_modifiers"></input>
-          <br>
-          <br>
-          Gloves and Bracelet
-          <select type="text" id="gloves"></select>
-          <br>
-          <input type="text" id="gloves_modifiers"></input>
-          <br>
-          <br>
-          Weapon
-          <select type="text" id="weapon"></select>
-          <br>
-          <input type="text" id="weapon_modifiers"></input>
+        <input type=" text" id="belt_modifiers" class="refresher"></input>
+        <br>
+        <br>
+        Gloves and Bracelet
+        <select type="text" id="gloves" class="refresher"></select>
+        <br>
+        <input type="text" id="gloves_modifiers" class="refresher"></input>
+        <br>
+        <br>
+        Weapon
+        <select type="text" id="weapon" class="refresher"></select>
+        <br>
+        <input type="text" id="weapon_modifiers" class="refresher"></input>
       </div>
     </div>
     <div class="stats_container">
@@ -139,8 +137,9 @@
   </div>
   <br>
   <br>
-  <button id="copylink">Click to copy link!</button>
-  <button id="copylink-sharing">Click to copy link for sharing!</button>
+  <button id="copylink" class="refresher">Click to copy link!</button>
+  <button id="copylink-sharing" class="refresher">Click to copy link for sharing!</button>
+  <script src="js/talisman.js"></script>
   <script src="js/items.js"></script>
   <script src="js/reforges.js"></script>
   <script src="js/dropdowns.js"></script>
