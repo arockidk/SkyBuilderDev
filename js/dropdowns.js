@@ -46,9 +46,11 @@ function updateDropdowns(element, items, category) {
     }
 
   }
+  let optionsStr = ''
   for (let i = 0; i < array.length; i++) {
-    element.options[element.options.length] = new Option(array[i], array[i]);
+    optionsStr = optionsStr + '<option value="' + array[i] + '">';
   }
+  element.innerHTML = optionsStr
 }
 
 
@@ -65,14 +67,14 @@ function changeElement(element, category) {
     }));
 }
 
-changeElement(document.getElementById("helmet"), "HELMET")
-changeElement(document.getElementById("chestplate"), "CHESTPLATE")
-changeElement(document.getElementById("leggings"), "LEGGINGS")
-changeElement(document.getElementById("boots"), "BOOTS")
-changeElement(document.getElementById("necklace"), "NECKLACE")
-changeElement(document.getElementById("cloak"), "CLOAK")
-changeElement(document.getElementById("belt"), "BELT")
-changeElement(document.getElementById("gloves"), "4TH_EQUIP")
-changeElement(document.getElementById("weapon"), "WEAPON")
+changeElement(document.getElementById("helmets"), "HELMET")
+changeElement(document.getElementById("chestplates"), "CHESTPLATE")
+changeElement(document.getElementById("leggingss"), "LEGGINGS")
+changeElement(document.getElementById("bootss"), "BOOTS")
+changeElement(document.getElementById("necklaces"), "NECKLACE")
+changeElement(document.getElementById("cloaks"), "CLOAK")
+changeElement(document.getElementById("belts"), "BELT")
+changeElement(document.getElementById("glovess"), "4TH_EQUIP")
+changeElement(document.getElementById("weapons"), "WEAPON")
 
 

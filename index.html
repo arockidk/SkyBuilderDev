@@ -5,57 +5,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>SkyBuilder</title>
-  <style>
-    body {
-      background-image: url('background.png');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
-    }
-
-    .site {
-      margin: 1rem;
-      padding: 2rem 2rem;
-      text-align: center;
-    }
-
-    .gear_container {
-      display: inline-block;
-      align: left;
-      padding: 1rem 1rem;
-    }
-
-    .base_stats {
-      display: inline-block;
-      padding: 1rem 1rem;
-    }
-
-    .stats_container {
-      display: inline-block;
-      padding: 1rem 1rem;
-    }
-  </style>
-  <!--- <link href="style.css" rel="stylesheet" type="text/css" /> --->
+  <link href="main.css" rel="stylesheet" type="text/css" />
 </head>
 
 <!--- <script src="script.js"></script>  for scripts --->
 
 <body text="#ffffff">
-  <marquee behavior="scroll" direction="left" scrollamount="20">v0.3.1 is now released! There are new talisman powers
-    and this scrolling bar is now here!</marquee>
+  <marquee behavior="scroll" direction="left" scrollamount="20">v0.4 is now released! Improved UI and talisman powers
+    are done!
+    Thanks to @Ender_Stone for some ideas in previous updates.
+  </marquee>
 
-  <h1 style="text-align:center">
+  <h1 style="text-align:center; font-size:80px;">
     SkyBuilder
   </h1>
+  <h3 style="text-align:center; font-size:40px">
+    Developed by Endistic.
+  </h3>
+
   <div class="site">
     <div class="stats_container">
       <div class="base_stats" align="left">
+        <b>Levels</b>
+        <br>
         SkyBlock XP (e.g 23510)
         <input type="text" id="sbxp" class="refresher"></input>
         Skill Average
         <input type="text" id="skavg" class="refresher"></input>
         Combat Level
         <input type="text" id="combatlv" class="refresher"></input>
+        <br>
+        <br>
+        <b>Talismen</b>
+        <br>
         Magical Power
         <input type="text" id="magical_power" class="refresher"></input>
         Talisman Powers
@@ -63,6 +45,23 @@
           <option value="None">None</option>
           <option value="Silky">Silky</option>
           <option value="Scorching">Scorching</option>
+          <option value="Slender">Slender</option>
+          <option value="Strong">Strong</option>
+          <option value="Bizarre">Bizarre</option>
+          <option value="Demonic">Demonic</option>
+          <option value="Hurtful">Hurtful</option>
+          <option value="Pleasant">Pleasant</option>
+          <option value="Adept">Adept</option>
+          <option value="Bloody">Bloody</option>
+          <option value="Forceful">Forceful</option>
+          <option value="Itchy">Itchy</option>
+          <option value="Mythical">Mythical</option>
+          <option value="Shaded">Shaded</option>
+          <option value="Sighted">Sighted</option>
+          <option value="Silky">Silky</option>
+          <option value="Sweet">Sweet</option>
+
+
         </select>
       </div>
       <div class="buffs" align="left">
@@ -75,58 +74,59 @@
       <div class="armor" align="left">
         <br>
         <br>
-        Helmet
-        <select type="text" id="helmet" class="refresher"></select>
-        <br>
+        <img src="img/helmet.PNG" alt="Helmet" style="width:50px;height:50px;"></img>
+        <datalist id="helmets"></datalist>
+        <input list="helmets" type=" text" id="helmet" class="refresher"></input>
         <input type="text" id="helmet_modifiers" class="refresher"></input>
         <br>
         <br>
-        Chestplate
-        <select type="text" id="chestplate" class="refresher"></select>
-        <br>
+        <img src="img/chestplate.PNG" alt="Chestplate" style="width:50px;height:50px;"></img>
+        <datalist id="chestplates"></datalist>
+        <input list="chestplates" type="text" id="chestplate" class="refresher"></input>
         <input type="text" id="chestplate_modifiers" class="refresher"></input>
         <br>
         <br>
-        Leggings
-        <select type="text" id="leggings" class="refresher"></select>
-        <br>
+        <datalist id="leggingss"></datalist>
+        <img src="img/leggings.PNG" alt="Leggings" style="width:50px;height:50px;"></img>
+        <input list="leggingss" type="text" id="leggings" class="refresher"></input>
         <input type="text" id="leggings_modifiers" class="refresher"></input>
         <br>
         <br>
-        Boots
-        <select type="text" id="boots" class="refresher"></select>
-        <br>
+        <datalist id="bootss"></datalist>
+        <img src="img/boots.PNG" alt="Boots" style="width:50px;height:50px;"></img>
+        <input list="bootss" type="text" id="boots" class="refresher"></input>
         <input type="text" id="boots_modifiers" class="refresher"></input>
       </div>
       <div class="equipment" align="left">
         <br>
         <br>
-        Necklace
-        <select type="text" id="necklace" class="refresher"></select>
-        <br>
+        <datalist id="necklaces"></datalist>
+        <img src="img/necklace.PNG" alt="Necklace" style="width:50px;height:50px;"></img>
+        <input list="necklaces" type="text" id="necklace" class="refresher"></input>
         <input type="text" id="necklace_modifiers" class="refresher"></input>
         <br>
         <br>
-        Cloak
-        <select type="text" id="cloak" class="refresher"></select>
-        <br>
+        <datalist id="cloaks"></datalist>
+        <img src="img/cloak.PNG" alt="Cloak" style="width:50px;height:50px;"></img>
+        <input list="cloaks" type="text" id="cloak" class="refresher"></input>
         <input type="text" id="cloak_modifiers" class="refresher"></input>
         <br>
         <br>
-        Belt
-        <select type="text" id="belt" class="refresher"></select>
-        <br>
+        <datalist id="belts"></datalist>
+        <img src="img/belt.PNG" alt="Belt" style="width:50px;height:50px;"></img>
+        <input list="belts" type="text" id="belt" class="refresher"></input>
         <input type=" text" id="belt_modifiers" class="refresher"></input>
         <br>
         <br>
-        Gloves and Bracelet
-        <select type="text" id="gloves" class="refresher"></select>
-        <br>
+        <datalist id="glovess"></datalist>
+        <img src="img/gloves.PNG" alt="Gloves / Bracelet" style="width:50px;height:50px;"></img>
+        <input list="glovess" type="text" id="gloves" class="refresher"></input>
         <input type="text" id="gloves_modifiers" class="refresher"></input>
         <br>
         <br>
         Weapon
-        <select type="text" id="weapon" class="refresher"></select>
+        <datalist id="weapons"></datalist>
+        <input list="weapons" type="text" id="weapon" class="refresher"></input>
         <br>
         <input type="text" id="weapon_modifiers" class="refresher"></input>
       </div>
@@ -139,6 +139,7 @@
   <br>
   <button id="copylink" class="refresher">Click to copy link!</button>
   <button id="copylink-sharing" class="refresher">Click to copy link for sharing!</button>
+
   <script src="js/talisman.js"></script>
   <script src="js/items.js"></script>
   <script src="js/reforges.js"></script>

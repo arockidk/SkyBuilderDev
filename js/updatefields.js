@@ -3,6 +3,9 @@ document.querySelectorAll('.refresher').forEach(item => {
   item.addEventListener('click', event => {
     updateFieldsRequest();
   })
+  item.addEventListener('change', event => {
+    updateFieldsRequest();
+  })
 })
 
 // edit for commit testing
@@ -293,30 +296,31 @@ function updateFields(items) {
     stats["HEALTH_REGEN"] += 63
   }
   getStatsText(stats, weapon_item)
+  copy_build("url")
 }
 
 function getStatsText(stats, weapon) {
   text =
-    "<br><h2>Defensive Stats</h2>"
-    + "Health: " + stats["HEALTH"]
+    "<br><b>Defensive Stats</b>"
+    + "<br>Health: " + stats["HEALTH"]
     + "<br> Defense: " + stats["DEFENSE"]
     + "<br> EHP: " + Math.round(stats["HEALTH"] * (1 + (stats["DEFENSE"] / 100)))
     + "<br>"
     + "<s>------------------------------------</s><br>"
-    + "<br><h2>Melee Stats</h2>"
+    + "<br><b>Melee Stats</b>"
     + "<br> Damage: " + stats["DAMAGE"]
     + "<br> Strength: " + stats["STRENGTH"]
     + "<br> Critical Damage: " + stats["CRITICAL_DAMAGE"] + "%"
     + "<br> Critical Chance: " + stats["CRITICAL_CHANCE"] + "%"
     + "<br> Estimate Average Melee DPS (with crit): " + (Math.round(calcDamage(stats, 0, (stats["ADDITIVE_DAMAGE"] / 100))) * (1 + (stats["ATTACK_SPEED"] * 0.05)))
     + "<br><s>------------------------------------</s><br>"
-    + "<br><h2>Misc. Stats</h2>"
+    + "<br><b>Misc. Stats</b>"
     + "<br>Walk Speed: " + stats["WALK_SPEED"] + "%"
     + "<br>Intelligence: " + stats["INTELLIGENCE"]
   if (stats["WEAPON_ABILITY_DAMAGE"] > 0) {
     text = text
       + "<br><s>------------------------------------</s><br>"
-      + "<br><h2>Magic Stats</h2>"
+      + "<br><b>Magic Stats</b>"
       + "<br>Ability Damage Base: " + stats["WEAPON_ABILITY_DAMAGE"]
       + "<br>Ability Damage Scaling: " + weapon["ability_damage_scaling"]
       + "<br>Estimate Final Ability Damage: " + Math.round(stats["WEAPON_ABILITY_DAMAGE"] * (1 + (stats["INTELLIGENCE"] / 100)) * 1 * 1)

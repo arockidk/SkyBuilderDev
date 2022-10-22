@@ -1,0 +1,40 @@
+@font-face {
+   font-family: c-font-basic;
+  src: url(font/SalmaproMedium.otf);
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+
+
+body {
+  font-family: c-font-basic;
+  background-image: url('img/background.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+.site {
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+}
+
+.gear_container {
+  display: inline-block;
+  padding: 1rem 1rem;
+}
+
+.base_stats {
+  display: inline-block;
+  align: left;
+}
+
+.stats_container {
+  display: inline-block;
+  align: right;
+}
