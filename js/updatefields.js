@@ -29,7 +29,7 @@ function nameToID(name) {
 // make api request and use that to calculate stats
 function updateFieldsRequest() {
   console.log("Updating.")
-  url = 'skyitems.json'
+  url = 'https://api.hypixel.net/resources/skyblock/items'
   fetch(url).then(response =>
     response.json().then(data => ({
       data: data,
@@ -41,44 +41,6 @@ function updateFieldsRequest() {
 
 
 }
-// return item stats and add it to given stats
-function returnItem(item, stats) {
-  statsList = [
-    "DAMAGE",
-    "HEALTH",
-    "DEFENSE",
-    "STRENGTH",
-    "INTELLIGENCE",
-    "WALK_SPEED",
-    "CRITICAL_CHANCE",
-    "CRITICAL_DAMAGE",
-    "ATTACK_SPEED",
-    "WEAPON_ABILITY_DAMAGE",
-    "TRUE_DEFENSE",
-    "FEROCITY",
-    "MAGIC_FIND",
-    "PET_LUCK",
-    "SEA_CREATURE_CHANCE",
-    "MINING_SPEED",
-    "MINING_FORTUNE",
-    "ADDITIVE_DAMAGE",
-    "COMBAT_DAMAGE"
-  ]
-
-  for (let i = 0; i < statsList.length; i++) {
-    let statCheck = statsList[i]
-    if (item["stats"] !== undefined) {
-
-      if (item["stats"][statCheck] !== undefined) {
-        stats[statCheck] += item["stats"][statCheck]
-      }
-    } else {
-    }
-
-  }
-
-  return stats
-}
 
 // handle reforges manually
 
@@ -89,57 +51,54 @@ function returnModifiers(modifiers, stats, item) {
   return stats
 }
 // calculate melee damage using given values
-function calcDamage(stats, baseMult, postMult) {
-  let damage = stats["DAMAGE"]
-  let strength = stats["STRENGTH"]
-  let critical_damage = stats["CRITICAL_DAMAGE"]
-  let ferocity = stats["FEROCITY"]
 
-  return ((5 + damage) * (1 + (strength / 100)) * (1 + (critical_damage / 100)) * (1 + (baseMult / 100)) * (1 + (postMult / 100))) * (1 + (ferocity / 100))
-}
 // update stats fields based on equipment and armor and modifiers given
 function updateFields(items) {
   console.log("Updating fields.")
   // Armor
   let helmet_item = null
-  let helmet = document.getElementById("helmet").value
-  let helmet_modifiers = document.getElementById("helmet_modifiers").value
+  let helmet = $("helmet").value
+  let helmet_modifiers = $("helmet_modifiers").value
   let helmet_matches = 0
   let chestplate_item = null
-  let chestplate = document.getElementById("chestplate").value
-  let chestplate_modifiers = document.getElementById("chestplate_modifiers").value
+  let chestplate = $("chestplate").value
+  let chestplate_modifiers = $("chestplate_modifiers").value
   let chestplate_matches = 0
   let leggings_item = null
-  let leggings = document.getElementById("leggings").value
-  let leggings_modifiers = document.getElementById("leggings_modifiers").value
+  let leggings = $("leggings").value
+  let leggings_modifiers = $("leggings_modifiers").value
   let leggings_matches = 0
   let boots_item = null
-  let boots = document.getElementById("boots").value
-  let boots_modifiers = document.getElementById("boots_modifiers").value
+  let boots = $("boots").value
+  let boots_modifiers = $("boots_modifiers").value
   let boots_matches = 0
 
   // Equipment
   let necklace_item = null
-  let necklace = document.getElementById("necklace").value
+  let necklace = $("necklace").value
   let necklace_matches = 0
   let cloak_item = null
-  let cloak = document.getElementById("cloak").value
+  let cloak = $("cloak").value
   let cloak_matches = 0
   let belt_item = null
-  let belt = document.getElementById("belt").value
+  let belt = $("belt").value
   let belt_matches = 0
   let gloves_item = null
-  let gloves = document.getElementById("gloves").value
+  let gloves = $("gloves").value
   let gloves_matches = 0
 
   // Weapon
   let weapon_item = null
-  let weapon = document.getElementById("weapon").value
-  let weapon_modifiers = document.getElementById("weapon_modifiers").value
+  let weapon = $("weapon").value
+  let weapon_modifiers = $("weapon_modifiers").value
   let weapon_matches = 0
 
   // Calculate items
   for (let i = 0; i < items.length; i++) {
+    if (items[i]["name"].includes("Tiger")) {
+      console.log(items[i])
+      console.log("above is tiger?")
+    }
     if (items[i]["id"].includes("STARRED_")) {
       continue
     }
@@ -200,40 +159,41 @@ function updateFields(items) {
     "MINING_SPEED": 0,
     "MINING_FORTUNE": 0,
     "ADDITIVE_DAMAGE": 0,
-    "COMBAT_DAMAGE": 0
+    "COMBAT_DAMAGE": 0,
+    "ABILITY_DAMAGE_PERCENT": 0
   }
   // check for item matches, and if it matches correctly, return the item
   // if statements are intentionally duplicated
   if (helmet_matches == 1) {
-    stats = returnItem(helmet_item, stats)
+    stats = returnItem(helmet_item, stats, "helmet")
   }
   if (chestplate_matches == 1) {
-    stats = returnItem(chestplate_item, stats)
+    stats = returnItem(chestplate_item, stats, "chestplate")
   }
   if (leggings_matches == 1) {
-    stats = returnItem(leggings_item, stats)
+    stats = returnItem(leggings_item, stats, "leggings")
   }
   if (boots_matches == 1) {
-    stats = returnItem(boots_item, stats)
+    stats = returnItem(boots_item, stats, "boots")
   }
   if (necklace_matches == 1) {
-    stats = returnItem(necklace_item, stats)
+    stats = returnItem(necklace_item, stats, "necklace")
   }
   if (cloak_matches == 1) {
-    stats = returnItem(cloak_item, stats)
+    stats = returnItem(cloak_item, stats, "cloak")
   }
   if (belt_matches == 1) {
-    stats = returnItem(belt_item, stats)
+    stats = returnItem(belt_item, stats, "belt")
   }
   if (gloves_matches == 1) {
-    stats = returnItem(gloves_item, stats)
+    stats = returnItem(gloves_item, stats, "gloves")
   }
   if (weapon_matches == 1) {
-    stats = returnItem(weapon_item, stats)
+    stats = returnItem(weapon_item, stats, "weapon")
   }
 
   // enchants
-  if (helmet_matches == 1) {
+  /* if (helmet_matches == 1) {
     stats = handleEnchants(helmet_modifiers, stats, helmet_item)
   }
   if (chestplate_matches == 1) {
@@ -257,22 +217,21 @@ function updateFields(items) {
   }
   if (boots_matches == 1) {
     stats = handleReforges(boots_modifiers, stats, helmet_item)
-  }
+  } */
 
   // weapon
-  if (weapon_matches == 1) {
+  /* if (weapon_matches == 1) {
     stats = handleEnchants(weapon_modifiers, stats, weapon_item)
-  }
+  } */
 
   stats = handleTalisman(stats)
-  let sbxp = document.getElementById("sbxp").value
-  let skavg = document.getElementById("skavg").value
-  let skcmbt = document.getElementById("combatlv").value
-  stats["HEALTH"] += Math.round(parseInt(sbxp / 100)) * 5 + (skavg * 8)
+  let sbxp = $("sbxp").value
+  let skavg = $("skavg").value
+  let skcmbt = $("combatlv").value
+  stats["HEALTH"] += (Math.round(parseInt(sbxp / 100)) * 5) + (skavg * 8)
   stats["STRENGTH"] += Math.round(parseInt(sbxp / 500)) * 1 + (skavg * 2)
   stats["CRITICAL_CHANCE"] += (skavg * 2)
   stats["HEALTH"] += Math.round(parseInt(sbxp / 1000)) * 10
-  stats["ADDITIVE_DAMAGE"] += (skcmbt * 4)
 
   if (helmet_item !== undefined && helmet_item !== null) {
     if (helmet_item["name"].includes("Warden Helmet")) {
@@ -280,7 +239,7 @@ function updateFields(items) {
       stats["DAMAGE"] = Math.round(stats["DAMAGE"] * (1 + (0.2 * (stats["WALK_SPEED"] / 25))))
     }
   }
-  if (document.getElementById("god_pot_buff").checked) {
+  if ($("god_pot_buff").checked) {
     stats["HEALTH"] += 100
     stats["DEFENSE"] += 66
     stats["WALK_SPEED"] += 228
@@ -295,40 +254,17 @@ function updateFields(items) {
     stats["MINING_FORTUNE"] += 25
     stats["HEALTH_REGEN"] += 63
   }
+  if ($("crochet_tiger_buff").checked) {
+    stats["ATTACK_SPEED"] += 35
+  }
+  if (weapon_item["name"].includes("Terminator")) {
+    stats["CRITICAL_CHANCE"] = stats["CRITICAL_CHANCE"] / 4;
+  }
+  let tuning = $("tuning_points").value
+  stats[tuning] += ($("magical_power").value / 10) * 0.3
   getStatsText(stats, weapon_item)
   copy_build("url")
 }
 
-function getStatsText(stats, weapon) {
-  text =
-    "<br><b>Defensive Stats</b>"
-    + "<br>Health: " + stats["HEALTH"]
-    + "<br> Defense: " + stats["DEFENSE"]
-    + "<br> EHP: " + Math.round(stats["HEALTH"] * (1 + (stats["DEFENSE"] / 100)))
-    + "<br>"
-    + "<s>------------------------------------</s><br>"
-    + "<br><b>Melee Stats</b>"
-    + "<br> Damage: " + stats["DAMAGE"]
-    + "<br> Strength: " + stats["STRENGTH"]
-    + "<br> Critical Damage: " + stats["CRITICAL_DAMAGE"] + "%"
-    + "<br> Critical Chance: " + stats["CRITICAL_CHANCE"] + "%"
-    + "<br> Estimate Average Melee DPS (with crit): " + (Math.round(calcDamage(stats, 0, (stats["ADDITIVE_DAMAGE"] / 100))) * (1 + (stats["ATTACK_SPEED"] * 0.05)))
-    + "<br><s>------------------------------------</s><br>"
-    + "<br><b>Misc. Stats</b>"
-    + "<br>Walk Speed: " + stats["WALK_SPEED"] + "%"
-    + "<br>Intelligence: " + stats["INTELLIGENCE"]
-  if (stats["WEAPON_ABILITY_DAMAGE"] > 0) {
-    text = text
-      + "<br><s>------------------------------------</s><br>"
-      + "<br><b>Magic Stats</b>"
-      + "<br>Ability Damage Base: " + stats["WEAPON_ABILITY_DAMAGE"]
-      + "<br>Ability Damage Scaling: " + weapon["ability_damage_scaling"]
-      + "<br>Estimate Final Ability Damage: " + Math.round(stats["WEAPON_ABILITY_DAMAGE"] * (1 + (stats["INTELLIGENCE"] / 100)) * 1 * 1)
-  }
-  if (stats["MINING_SPEED"] > 0) {
-    text = text
-      + "<br>Mining Speed: " + stats["MINING_SPEED"]
-      + "<br>Mining Fortune: " + stats["MINING_FORTUNE"]
-  }
-  document.getElementById("stats").innerHTML = text
-}
+
+

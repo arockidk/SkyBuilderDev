@@ -12,7 +12,7 @@ html, body {
 
 body {
   font-family: c-font-basic;
-  background-image: url('img/background.png');
+  background-image: url('img/new-background.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%;
@@ -21,7 +21,7 @@ body {
 .site {
   margin: 1rem;
   padding: 2rem 2rem;
-  text-align: center;
+  text-align: left;
 }
 
 .gear_container {
@@ -34,7 +34,21 @@ body {
   align: left;
 }
 
+.js_dropdown {
+  font-family: c-font-basic;
+  color: white;
+  background: transparent;
+  border: none;
+}
+
 .stats_container {
   display: inline-block;
   align: right;
+}
+
+input[type=text] {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
 }

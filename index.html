@@ -11,9 +11,8 @@
 <!--- <script src="script.js"></script>  for scripts --->
 
 <body text="#ffffff">
-  <marquee behavior="scroll" direction="left" scrollamount="20">v0.4 is now released! Improved UI and talisman powers
-    are done!
-    Thanks to @Ender_Stone for some ideas in previous updates.
+  <marquee behavior="scroll" direction="left" scrollamount="20">v0.4.1 is now released! Added new fields to make
+    SkyBuilder more user-intuitive.
   </marquee>
 
   <h1 style="text-align:center; font-size:80px;">
@@ -26,113 +25,173 @@
   <div class="site">
     <div class="stats_container">
       <div class="base_stats" align="left">
-        <b>Levels</b>
-        <br>
-        SkyBlock XP (e.g 23510)
-        <input type="text" id="sbxp" class="refresher"></input>
-        Skill Average
-        <input type="text" id="skavg" class="refresher"></input>
-        Combat Level
-        <input type="text" id="combatlv" class="refresher"></input>
-        <br>
-        <br>
-        <b>Talismen</b>
-        <br>
-        Magical Power
-        <input type="text" id="magical_power" class="refresher"></input>
-        Talisman Powers
-        <select name="Talisman Powers" id="talisman_power" class="refresher">
-          <option value="None">None</option>
-          <option value="Silky">Silky</option>
-          <option value="Scorching">Scorching</option>
-          <option value="Slender">Slender</option>
-          <option value="Strong">Strong</option>
-          <option value="Bizarre">Bizarre</option>
-          <option value="Demonic">Demonic</option>
-          <option value="Hurtful">Hurtful</option>
-          <option value="Pleasant">Pleasant</option>
-          <option value="Adept">Adept</option>
-          <option value="Bloody">Bloody</option>
-          <option value="Forceful">Forceful</option>
-          <option value="Itchy">Itchy</option>
-          <option value="Mythical">Mythical</option>
-          <option value="Shaded">Shaded</option>
-          <option value="Sighted">Sighted</option>
-          <option value="Silky">Silky</option>
-          <option value="Sweet">Sweet</option>
+        <button id="levels_button" class="js_dropdown" onclick="toggleLevels()">Hide Levels ⇑</button>
+        <div id="levels_toggle">
+          <br>
+          SkyBlock XP (e.g 23510)
+          <input type="text" id="sbxp" class="refresher"></input>
+          Skill Average
+          <input type="text" id="skavg" class="refresher"></input>
+          Combat Level
+          <input type="text" id="combatlv" class="refresher"></input>
+        </div>
 
-
-        </select>
+        <br>
+        <br>
+        <button class="js_dropdown" onclick="toggleTalismans()">Hide Talismans ⇑</button>
+        <div id="talismans_toggle">
+          <br>
+          Magical Power
+          <input type="text" id="magical_power" class="refresher"></input>
+          Talisman Powers
+          <datalist id="powers">
+            <option value="None">None</option>
+            <option value="Silky">Silky</option>
+            <option value="Scorching">Scorching</option>
+            <option value="Slender">Slender</option>
+            <option value="Strong">Strong</option>
+            <option value="Bizarre">Bizarre</option>
+            <option value="Demonic">Demonic</option>
+            <option value="Hurtful">Hurtful</option>
+            <option value="Pleasant">Pleasant</option>
+            <option value="Adept">Adept</option>
+            <option value="Bloody">Bloody</option>
+            <option value="Forceful">Forceful</option>
+            <option value="Itchy">Itchy</option>
+            <option value="Mythical">Mythical</option>
+            <option value="Shaded">Shaded</option>
+            <option value="Sighted">Sighted</option>
+            <option value="Silky">Silky</option>
+            <option value="Sweet">Sweet</option>
+          </datalist>
+          <input list="powers" id="talisman_power" class="refresher" list="powers" type="text">
+          <br>
+          <b>WIP</b> Stat to Invest Tuning Points In:
+          <input id="tuning_points" class="refreshers" type="text">
+          </select>
+        </div>
       </div>
-      <div class="buffs" align="left">
+      <br>
+      <button class="js_dropdown" onclick="toggleBuffs()">Hide Buffs ⇓</button>
+      <div id="buffs_div" class="buffs" align="left">
         <br>
-        <input type="checkbox" id="god_pot_buff" class="refresher">God Potion</input>
-        <input type="checkbox" id="pigman_sword_buff" class="refresher">Pigman Sword</input>
-        <input type="checkbox" id="jasper_scroll_buff" class="refresher">Jasper Power Scroll</input>
-        <input type="checkbox" id="amethyst_scroll_buff">Amethyst Power Scroll</input>
+        <button class="js_dropdown" onclick="togglePetConfigs()">Hide Pet Configuration ⇑</button>
+        <div id="pet_config_toggle">
+          <input type="checkbox" id="crochet_tiger_buff" class="refresher">Crochet Tiger Plushie</input>
+          <br>
+        </div>
+        <br>
+        <button class="js_dropdown" onclick="toggleExtraModifiers()">Hide Extra Modifiers ⇑</button>
+        <div id="extra_modifiers">
+          <input type="checkbox" id="god_pot_buff" class="refresher">God Potion</input>
+          <input type="checkbox" id="pigman_sword_buff" class="refresher">Pigman Sword</input>
+          <input type="checkbox" id="jasper_scroll_buff" class="refresher">Jasper Power Scroll</input>
+          <input type="checkbox" id="amethyst_scroll_buff">Amethyst Power Scroll</input>
+        </div>
+
       </div>
       <div class="armor" align="left">
         <br>
         <br>
+        <datalist id="armor_reforges">
+          <option value="Ancient">Ancient</option>
+          <option value="Necrotic">Necrotic</option>
+          <option value="Giant">Giant</option>
+          <option value="Loving">Loving</option>
+          <option value="Renowned">Renowned</option>
+        </datalist>
         <img src="img/helmet.PNG" alt="Helmet" style="width:50px;height:50px;"></img>
         <datalist id="helmets"></datalist>
-        <input list="helmets" type=" text" id="helmet" class="refresher"></input>
-        <input type="text" id="helmet_modifiers" class="refresher"></input>
+        <input placeholder="Helmet (e.g Necron's Helmet)" list="helmets" type="text" id="helmet" class="refresher"
+          n></input>
+        <input list="armor_reforges" placeholder="Reforge (e.g Necrotic)" type="text" id="helmet_modifiers" size="10"
+          class="refresher"></input>
+        <input placeholder="Stars (e.g 5)" type="text" id="helmet_stars" class="refresher" size="3"></input>
+        <input placeholder="Enchants (e.g t7)" type="text" id="helmet_enchants" class="refresher"></input>
         <br>
         <br>
         <img src="img/chestplate.PNG" alt="Chestplate" style="width:50px;height:50px;"></img>
         <datalist id="chestplates"></datalist>
-        <input list="chestplates" type="text" id="chestplate" class="refresher"></input>
-        <input type="text" id="chestplate_modifiers" class="refresher"></input>
+        <input placeholder="Chestplate" list="chestplates" type="text" id="chestplate" class="refresher"></input>
+        <input list="armor_reforges" placeholder="Reforge" type="text" id="chestplate_modifiers" class="refresher"
+          size="10"></input>
+        <input placeholder="Stars" type="text" id="chestplate_stars" class="refresher" size="3"></input>
+        <input placeholder="Enchants" type="text" id="chestplate_enchants" class="refresher"></input>
         <br>
         <br>
         <datalist id="leggingss"></datalist>
         <img src="img/leggings.PNG" alt="Leggings" style="width:50px;height:50px;"></img>
-        <input list="leggingss" type="text" id="leggings" class="refresher"></input>
-        <input type="text" id="leggings_modifiers" class="refresher"></input>
+        <input placeholder="Leggings" list="leggingss" type="text" id="leggings" class="refresher"></input>
+        <input list="armor_reforges" placeholder="Reforge" type="text" id="leggings_modifiers" size="10"
+          class="refresher"></input>
+        <input placeholder="Stars" type="text" id="leggings_stars" class="refresher" size="3"></input>
+        <input placeholder="Enchants" type="text" id="leggings_enchants" class="refresher"></input>
+
         <br>
         <br>
         <datalist id="bootss"></datalist>
         <img src="img/boots.PNG" alt="Boots" style="width:50px;height:50px;"></img>
-        <input list="bootss" type="text" id="boots" class="refresher"></input>
-        <input type="text" id="boots_modifiers" class="refresher"></input>
+        <input placeholder="Boots" list="bootss" type="text" id="boots" class="refresher"></input>
+        <input list="armor_reforges" placeholder="Boots Reforge" type="text" id="boots_modifiers" size="10"
+          class="refresher"></input>
+        <input placeholder="Stars" type="text" id="boots_stars" class="refresher" size="3"></input>
+        <input placeholder="Enchants" type="text" id="boots_enchants" class="refresher"></input>
       </div>
       <div class="equipment" align="left">
         <br>
         <br>
         <datalist id="necklaces"></datalist>
         <img src="img/necklace.PNG" alt="Necklace" style="width:50px;height:50px;"></img>
-        <input list="necklaces" type="text" id="necklace" class="refresher"></input>
-        <input type="text" id="necklace_modifiers" class="refresher"></input>
+        <input placeholder="Necklace" list="necklaces" type="text" id="necklace" class="refresher"></input>
+        <input placeholder="Reforges" type="text" id="necklace_modifiers" class="refresher" size="10"></input>
+        <input placeholder="Stars" type="text" id="necklace_stars" class="refresher" size="3"></input>
+        <input placeholder="Enchants" type="text" id="necklace_enchants" class="refresher"></input>
         <br>
         <br>
         <datalist id="cloaks"></datalist>
         <img src="img/cloak.PNG" alt="Cloak" style="width:50px;height:50px;"></img>
-        <input list="cloaks" type="text" id="cloak" class="refresher"></input>
-        <input type="text" id="cloak_modifiers" class="refresher"></input>
+        <input placeholder="Cloak" list="cloaks" type="text" id="cloak" class="refresher"></input>
+        <input placeholder="Reforges" type="text" id="cloak_modifiers" class="refresher" size="10"></input>
+        <input placeholder="Stars" type="text" id="cloak_stars" class="refresher" size="3"></input>
+        <input placeholder="Enchants" type="text" id="cloak_enchants" class="refresher"></input>
         <br>
         <br>
         <datalist id="belts"></datalist>
         <img src="img/belt.PNG" alt="Belt" style="width:50px;height:50px;"></img>
-        <input list="belts" type="text" id="belt" class="refresher"></input>
-        <input type=" text" id="belt_modifiers" class="refresher"></input>
+        <input placeholder="Belt" list="belts" type="text" id="belt" class="refresher"></input>
+        <input placeholder="Reforges" type="text" id="belt_modifiers" class="refresher" size="10"></input>
+        <input placeholder="Stars" type="text" id="belt_stars" class="refresher" size="3"></input>
+        <input placeholder="Enchants" type="text" id="belt_enchants" class="refresher"></input>
         <br>
         <br>
         <datalist id="glovess"></datalist>
         <img src="img/gloves.PNG" alt="Gloves / Bracelet" style="width:50px;height:50px;"></img>
-        <input list="glovess" type="text" id="gloves" class="refresher"></input>
-        <input type="text" id="gloves_modifiers" class="refresher"></input>
+        <input placeholder="Gloves/Bracelets" list="glovess" type="text" id="gloves" class="refresher"></input>
+        <input placeholder="Reforges" type="text" id="gloves_modifiers" class="refresher" size="10"></input>
+        <input placeholder="Stars" type="text" id="gloves_stars" class="refresher" size="3"></input>
+        <input placeholder="Enchants" type="text" id="gloves_enchants" class="refresher"></input>
         <br>
         <br>
         Weapon
+        <datalist id="weapon_reforges">
+          <option value="Withered">Withered</option>
+          <option value="Fabled">Fabled</option>
+          <option value="Spiritual">Spiritual</option>
+          <option value="Precise">Precise</option>
+          <option value="Hasty">Hasty</option>
+        </datalist>
         <datalist id="weapons"></datalist>
-        <input list="weapons" type="text" id="weapon" class="refresher"></input>
-        <br>
-        <input type="text" id="weapon_modifiers" class="refresher"></input>
+        <input placeholder="Weapon" list="weapons" type="text" id="weapon" class="refresher"></input>
+        <input list="weapon_reforges" placeholder="Weapon Reforges" type="text" id="weapon_modifiers" size="10"
+          class="refresher"></input>
+        <input placeholder="Weapon Stars" type="text" id="weapon_stars" class="refresher" size="3"></input>
+        <input placeholder="Weapon Enchants" type="text" id="weapon_enchants" class="refresher"></input>
       </div>
     </div>
     <div class="stats_container">
       <h3 id="stats">Stats here.</h3>
+    </div>
+    <div id="pre_insert">
     </div>
   </div>
   <br>
@@ -140,12 +199,17 @@
   <button id="copylink" class="refresher">Click to copy link!</button>
   <button id="copylink-sharing" class="refresher">Click to copy link for sharing!</button>
 
+  <script src="js/utils.js"></script>
+  <script src="js/damagecalc.js"></script>
   <script src="js/talisman.js"></script>
   <script src="js/items.js"></script>
   <script src="js/reforges.js"></script>
   <script src="js/dropdowns.js"></script>
-  <script src="js/updatefields.js"></script>
   <script src="js/loadvals.js"></script>
+  <script src="js/showstats.js"></script>
+  <script src="js/updatefields.js"></script>
+  <script src="js/showsettings.js"></script>
+
 </body>
 
 </html>

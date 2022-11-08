@@ -67,14 +67,14 @@ function changeElement(element, category) {
     }));
 }
 
-changeElement(document.getElementById("helmets"), "HELMET")
-changeElement(document.getElementById("chestplates"), "CHESTPLATE")
-changeElement(document.getElementById("leggingss"), "LEGGINGS")
-changeElement(document.getElementById("bootss"), "BOOTS")
-changeElement(document.getElementById("necklaces"), "NECKLACE")
-changeElement(document.getElementById("cloaks"), "CLOAK")
-changeElement(document.getElementById("belts"), "BELT")
-changeElement(document.getElementById("glovess"), "4TH_EQUIP")
-changeElement(document.getElementById("weapons"), "WEAPON")
+changeElement($("helmets"), "HELMET")
+changeElement($("chestplates"), "CHESTPLATE")
+changeElement($("leggingss"), "LEGGINGS")
+changeElement($("bootss"), "BOOTS")
+changeElement($("necklaces"), "NECKLACE")
+changeElement($("cloaks"), "CLOAK")
+changeElement($("belts"), "BELT")
+changeElement($("glovess"), "4TH_EQUIP")
+changeElement($("weapons"), "WEAPON")
 
 

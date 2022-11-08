@@ -1,10 +1,17 @@
 function handleTalisman(stats) {
   console.log(stats)
-  let mult = parseInt(document.getElementById("magical_power"))
+  let mult = parseInt(document.getElementById("magical_power").value)
   let finalMult = 28.49 * Math.log(0.0019 * mult + 1) ^ 1.2
   let power = document.getElementById("talisman_power").value
+  console.log("finalMult " + mult + " " + finalMult)
   if (power.includes("Silky")) {
     stats["CRITICAL_DAMAGE"] += 22.8 * finalMult
+  }
+  if (power.includes("Itchy")) {
+    stats["WALK_SPEED"] += 0.6 * finalMult;
+    stats["STRENGTH"] += 7.2 * finalMult;
+    stats["CRITICAL_DAMAGE"] += 8.4 * finalMult;
+    stats["ATTACK_SPEED"] += 2.15 * finalMult;
   }
   if (power.includes("Scorching")) {
     stats["STRENGTH"] += 8.4 * finalMult
@@ -93,6 +100,7 @@ function handleTalisman(stats) {
     stats["DEFENSE"] += 10.8 * finalMult
     stats["WALK_SPEED"] += 1.2 * finalMult
   }
+
   console.log(stats)
   return stats
 }
